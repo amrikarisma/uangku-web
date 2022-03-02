@@ -75,13 +75,13 @@ const Category = () => {
                                         <tr
                                             category="{category}"
                                             key={category.id}>
-                                            <td className="border-b border-slate-100 dark:border-slate-700 p-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                            <td className="p-4 md:pl-8 text-slate-500 dark:text-slate-400">
                                                 {category.title}
                                             </td>
-                                            <td className="border-b border-slate-100 dark:border-slate-700 p-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                            <td className="p-4 md:pl-8 text-slate-500 dark:text-slate-400">
                                                 {category.type}
                                             </td>
-                                            <td className="border-b border-slate-100 dark:border-slate-700 p-1 md:pl-8 text-slate-500 dark:text-slate-400">
+                                            <td className="p-1 md:pl-8 text-slate-500 dark:text-slate-400">
                                                 <Link
                                                     href={`/transaction/category/edit/${category.id}`}>
                                                     <a className="m-1 bg-slate-500 rounded text-white text-xs inline-flex items-center px-2 py-1 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">

@@ -111,7 +111,6 @@ const CreateTransaction = ({ id }) => {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="px-2 py-6 md:px-6 py-6 bg-white border-b border-gray-200">
-                            {type}
                             <form onSubmit={submitForm}>
                                 <div className="mt-4">
                                     <Label htmlFor="type">Type</Label>
@@ -185,7 +184,8 @@ const CreateTransaction = ({ id }) => {
                                 <div className="mt-4">
                                     <Label htmlFor="description">Date</Label>
                                     <DatePicker
-                                        style={{ width: 300 }}
+                                        block
+                                        size="lg"
                                         placeholder="Select Date Range"
                                         onChange={event => {
                                             setDate(event)

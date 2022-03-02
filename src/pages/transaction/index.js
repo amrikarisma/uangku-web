@@ -131,6 +131,8 @@ const Transaction = () => {
                                 <div>
                                     <Label htmlFor="date">Date</Label>
                                     <DateRangePicker
+                                        block
+                                        size="lg"
                                         showOneCalendar
                                         onChange={event => {
                                             setDateRange(event)
@@ -172,7 +174,7 @@ const Transaction = () => {
                                             <tr
                                                 transaction="{transaction}"
                                                 key={transaction.id}>
-                                                <td className="border-b border-slate-100 dark:border-slate-700 md:p-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                                <td className="md:p-4 md:pl-8 text-slate-500 dark:text-slate-400">
                                                     <div className="md:inline text-center font-bold md:pr-4 text-2xl md:text-xl">
                                                         {getViewDate(
                                                             transaction.date,
@@ -186,7 +188,7 @@ const Transaction = () => {
                                                         )}
                                                     </div>
                                                 </td>
-                                                <td className="border-b border-slate-100 dark:border-slate-700 md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                                <td className="md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400">
                                                     <div className="font-bold">
                                                         {
                                                             transaction

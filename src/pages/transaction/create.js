@@ -165,7 +165,8 @@ const CreateTransaction = () => {
                                 <div className="mt-4">
                                     <Label htmlFor="description">Date</Label>
                                     <DatePicker
-                                        style={{ width: 300 }}
+                                        block
+                                        size="lg"
                                         placeholder="Select Date Range"
                                         onChange={event => {
                                             setDate(event)

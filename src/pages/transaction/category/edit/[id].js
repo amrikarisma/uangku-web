@@ -8,7 +8,6 @@ import Button from '@/components/Button'
 import { useRouter } from 'next/router'
 
 const Category = ({ id }) => {
-    const [setCategory] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
@@ -16,7 +15,11 @@ const Category = ({ id }) => {
     const [setErrors] = useState([])
     const [setStatus] = useState(null)
     const router = useRouter()
-
+    const setData = data => {
+        setTitle(data.title)
+        setDescription(data.description)
+        setType(data.type)
+    }
     useEffect(() => {
         const fetchData = async () => {
             await axios
@@ -28,13 +31,6 @@ const Category = ({ id }) => {
         }
         fetchData()
     }, [])
-
-    const setData = data => {
-        setCategory(data)
-        setTitle(data.title)
-        setDescription(data.description)
-        setType(data.type)
-    }
 
     const submitForm = async event => {
         event.preventDefault()
