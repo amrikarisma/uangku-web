@@ -38,7 +38,6 @@ const Transaction = () => {
                 `/api/transaction?startDate=${filterStartDate}&endDate=${filterEndDate}`,
             )
             .then(res => {
-                console.log(res)
                 setTransactions(res.data.data)
             })
             .catch(error => {
