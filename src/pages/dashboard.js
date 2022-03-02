@@ -9,7 +9,6 @@ const Dashboard = () => {
                     Dashboard
                 </h2>
             }>
-
             <Head>
                 <title>Dashboard - Uangku</title>
             </Head>

@@ -8,13 +8,13 @@ import Button from '@/components/Button'
 import { useRouter } from 'next/router'
 
 const Category = ({ id }) => {
-    const [category, setCategory] = useState('')
+    const [setCategory] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [types] = useState(['income', 'spending'])
-    const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
+    const [setErrors] = useState([])
+    const [setStatus] = useState(null)
     const router = useRouter()
 
     useEffect(() => {
@@ -64,7 +64,6 @@ const Category = ({ id }) => {
                     Category
                 </h2>
             }>
-
             <Head>
                 <title>Category - Uangku</title>
             </Head>

@@ -18,8 +18,8 @@ const CreateTransaction = () => {
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
     const [date, setDate] = useState(new Date())
-    const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
+    const [setErrors] = useState([])
+    const [setStatus] = useState(null)
     const router = useRouter()
 
     const getCategory = async value => {
@@ -27,7 +27,6 @@ const CreateTransaction = () => {
             .get(`/api/transaction/category?showAll=1&type=${value}`)
             .then(res => {
                 setCategories(res.data.data)
-                console.log(res.data)
             })
             .catch(error => {
                 setErrors(error)

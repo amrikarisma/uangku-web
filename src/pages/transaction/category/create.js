@@ -1,10 +1,9 @@
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from '@/lib/axios'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
-import Link from 'next/link'
 import Button from '@/components/Button'
 import { useRouter } from 'next/router'
 
@@ -13,8 +12,8 @@ const Category = () => {
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [types] = useState(['income', 'spending'])
-    const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
+    const [setErrors] = useState([])
+    const [setStatus] = useState(null)
     const router = useRouter()
 
     const submitForm = async event => {
@@ -34,7 +33,6 @@ const Category = () => {
                     setErrors(error)
                     if (error.response.status !== 409) throw error
                 })
-
         }
         fetchData()
     }
@@ -46,7 +44,6 @@ const Category = () => {
                     Category
                 </h2>
             }>
-
             <Head>
                 <title>Category - Uangku</title>
             </Head>

@@ -18,8 +18,8 @@ const CreateTransaction = ({ id }) => {
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
     const [date, setDate] = useState(new Date())
-    const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
+    const [setErrors] = useState([])
+    const [setStatus] = useState(null)
 
     const router = useRouter()
 
