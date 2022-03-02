@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -18,8 +19,8 @@ const CreateTransaction = () => {
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
     const [date, setDate] = useState(new Date())
-    const [setErrors] = useState([])
-    const [setStatus] = useState(null)
+    const [errors, setErrors] = useState([])
+    const [status, setStatus] = useState(null)
     const router = useRouter()
 
     const getCategory = async value => {

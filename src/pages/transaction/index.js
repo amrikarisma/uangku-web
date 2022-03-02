@@ -211,7 +211,7 @@ const Transaction = () => {
                                                                 .type
                                                         }
                                                     </div>
-                                                    <div className="mt-2">
+                                                    <div className="mt-2 mb-10">
                                                         <Link
                                                             href={`/transaction/edit/${transaction.id}`}>
                                                             <a className="mr-4 text-slate-600">
