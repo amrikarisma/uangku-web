@@ -230,7 +230,12 @@ const Transaction = () => {
                                                         </button>
                                                     </div>
                                                 </td>
-                                                <td className="text-right text-red-600 font-bold">
+                                                <td
+                                                    className={`${
+                                                        transaction.amount > 0
+                                                            ? 'text-green-600'
+                                                            : 'text-red-600'
+                                                    } text-right font-bold`}>
                                                     {formatCurrency(
                                                         transaction.amount,
                                                     )}
