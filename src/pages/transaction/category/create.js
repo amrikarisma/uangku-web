@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -12,8 +13,8 @@ const Category = () => {
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [types] = useState(['income', 'spending'])
-    const [setErrors] = useState([])
-    const [setStatus] = useState(null)
+    const [errors, setErrors] = useState([])
+    const [status, setStatus] = useState(null)
     const router = useRouter()
 
     const submitForm = async event => {

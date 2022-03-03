@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
@@ -12,8 +13,8 @@ const Category = ({ id }) => {
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [types] = useState(['income', 'spending'])
-    const [setErrors] = useState([])
-    const [setStatus] = useState(null)
+    const [errors, setErrors] = useState([])
+    const [status, setStatus] = useState(null)
     const router = useRouter()
     const setData = data => {
         setTitle(data.title)
@@ -21,17 +22,16 @@ const Category = ({ id }) => {
         setType(data.type)
     }
     useEffect(() => {
-        const fetchData = async () => {
-            await axios
-                .get(`/api/transaction/category/${id}`)
-                .then(res => setData(res.data.data))
-                .catch(error => {
-                    if (error.response.status !== 409) throw error
-                })
-        }
         fetchData()
     }, [])
-
+    const fetchData = async () => {
+        await axios
+            .get(`/api/transaction/category/${id}`)
+            .then(res => setData(res.data.data))
+            .catch(error => {
+                if (error.response.status !== 409) throw error
+            })
+    }
     const submitForm = async event => {
         event.preventDefault()
         const fetchData = async () => {
