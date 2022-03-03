@@ -32,8 +32,16 @@ const CreateTransaction = ({ id }) => {
             .get(`/api/transaction/${id}`)
             .then(res => {
                 getCategory(res.data.data.transaction_category.type)
-                setAmount(res.data.data.amount)
-                formatCurrency(res.data.data.amount)
+                setAmount(
+                    res.data.data.amount < 0
+                        ? res.data.data.amount * -1
+                        : res.data.data.amount,
+                )
+                formatCurrency(
+                    res.data.data.amount < 0
+                        ? res.data.data.amount * -1
+                        : res.data.data.amount,
+                )
                 setDescription(res.data.data.description)
                 setType(res.data.data.transaction_category.type)
                 setCategory(res.data.data.category_id)
