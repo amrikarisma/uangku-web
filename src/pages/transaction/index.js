@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Label from '@/components/Label'
 import { DateRangePicker } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css'
+import Pagination from 'react-js-pagination'
 
 const Transaction = () => {
     const startDate = new Date(
@@ -20,7 +21,7 @@ const Transaction = () => {
     useEffect(() => {
         fetchData()
     }, [])
-    const fetchData = async (date = null) => {
+    const fetchData = async (pageNumber = 1, date = null) => {
         date = date ? date : dateRange
         let filterStartDate = `${date[0].getFullYear()}-${
             date[0].getMonth() + 1
@@ -32,10 +33,9 @@ const Transaction = () => {
             : `${date[0].getFullYear()}-${
                   date[0].getMonth() + 1
               }-${date[0].getDate()}`
-
         await axios
             .get(
-                `/api/transaction?startDate=${filterStartDate}&endDate=${filterEndDate}`,
+                `/api/transaction?page=${pageNumber}&startDate=${filterStartDate}&endDate=${filterEndDate}`,
             )
             .then(res => {
                 setTransactions(res.data.data)
@@ -136,7 +136,7 @@ const Transaction = () => {
                                         showOneCalendar
                                         onChange={event => {
                                             setDateRange(event)
-                                            fetchData(event)
+                                            fetchData(1, event)
                                         }}
                                         defaultValue={dateRange}
                                         value={dateRange}
@@ -245,6 +245,35 @@ const Transaction = () => {
                                     )}
                                 </tbody>
                             </table>
+                            <div>
+                                <Pagination
+                                    activePage={
+                                        transactions?.transactions?.current_page
+                                            ? transactions?.transactions
+                                                  ?.current_page
+                                            : 0
+                                    }
+                                    itemsCountPerPage={
+                                        transactions?.transactions?.per_page
+                                            ? transactions?.transactions
+                                                  ?.per_page
+                                            : 0
+                                    }
+                                    totalItemsCount={
+                                        transactions?.transactions?.total
+                                            ? transactions?.transactions?.total
+                                            : 0
+                                    }
+                                    onChange={pageNumber => {
+                                        fetchData(pageNumber)
+                                    }}
+                                    pageRangeDisplayed={8}
+                                    itemClass="inline"
+                                    linkClass="inline px-3 py-2 mx-1 bg-slate-500 text-white hover:text-white visited:text-white rounded"
+                                    firstPageText="First Page"
+                                    lastPageText="Last Lage"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

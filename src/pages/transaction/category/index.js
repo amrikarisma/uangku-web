@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
 import Button from '@/components/Button'
 import Link from 'next/link'
+import Pagination from 'react-js-pagination'
 
 const Category = () => {
     const [categories, setCategories] = useState([])
@@ -11,9 +12,9 @@ const Category = () => {
     useEffect(() => {
         fetchData()
     }, [])
-    const fetchData = async () => {
+    const fetchData = async (pageNumber = 1) => {
         await axios
-            .get('/api/transaction/category')
+            .get(`/api/transaction/category?page=${pageNumber}`)
             .then(res => setCategories(res.data.data))
             .catch(error => {
                 if (error.response.status !== 409) throw error
@@ -125,6 +126,33 @@ const Category = () => {
                                     ))}
                                 </tbody>
                             </table>
+                            <div>
+                                <Pagination
+                                    activePage={
+                                        categories?.current_page
+                                            ? categories?.current_page
+                                            : 0
+                                    }
+                                    itemsCountPerPage={
+                                        categories?.per_page
+                                            ? categories?.per_page
+                                            : 0
+                                    }
+                                    totalItemsCount={
+                                        categories?.total
+                                            ? categories?.total
+                                            : 0
+                                    }
+                                    onChange={pageNumber => {
+                                        fetchData(pageNumber)
+                                    }}
+                                    pageRangeDisplayed={8}
+                                    itemClass="inline"
+                                    linkClass="inline px-3 py-2 mx-1 bg-slate-500 text-white hover:text-white visited:text-white rounded"
+                                    firstPageText="First Page"
+                                    lastPageText="Last Lage"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

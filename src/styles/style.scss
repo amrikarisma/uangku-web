@@ -1,0 +1,32 @@
+body {
+    a {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.pagination {
+    text-align: center;
+    li {
+        display: none;
+        @media (min-width: 992px) {
+            display: inline;
+        }
+        &:nth-child(2), &:nth-last-child(2){
+            display: inline;
+        }
+        &.active {
+            a {
+                color: #ffffff;
+                background-color: #3b82f6;
+                
+            }
+        }
+        a {
+            &:hover {
+                background-color: #3b82f6;
+            }
+        }
+    }
+}
