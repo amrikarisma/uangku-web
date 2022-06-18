@@ -192,28 +192,16 @@ const Transaction = () => {
                         </Link>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="px-2 py-6 md:px-6 py-6 bg-white border-b border-gray-200">
+                        <div className="py-6">
                             <table className="border-collapse table-auto w-full text-sm">
-                                {/* <thead>
-                                    <tr>
-                                        <td className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Title
-                                        </td>
-                                        <td className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Type
-                                        </td>
-                                        <td className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Action
-                                        </td>
-                                    </tr>
-                                </thead> */}
                                 <tbody>
                                     {transactions?.transactions?.data?.map(
                                         transaction => (
                                             <tr
+                                                className="px-2 py-6 md:px-6 bg-white border-b border-gray-200"
                                                 transaction="{transaction}"
                                                 key={transaction.id}>
-                                                <td className="md:p-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/5">
+                                                <td className="p-2 md:p-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/5">
                                                     <div className="md:inline text-center font-bold md:pr-4 text-2xl md:text-xl">
                                                         {getViewDate(
                                                             transaction.date,
@@ -227,7 +215,7 @@ const Transaction = () => {
                                                         )}
                                                     </div>
                                                 </td>
-                                                <td className="md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/3">
+                                                <td className="py-2 md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/3">
                                                     <div className="font-bold">
                                                         {
                                                             transaction
@@ -279,7 +267,7 @@ const Transaction = () => {
                                                         transaction.amount > 0
                                                             ? 'text-green-600'
                                                             : 'text-red-600'
-                                                    } text-right font-bold md:w-1/3`}>
+                                                    } p-4 md:pl-8 text-right font-bold md:w-1/3`}>
                                                     {formatCurrency(
                                                         transaction.amount,
                                                     )}
