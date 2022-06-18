@@ -143,6 +143,11 @@ const Navigation = ({ user }) => {
                             active={router.pathname === '/transaction'}>
                             Transaction
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/wallet"
+                            active={router.pathname === '/wallet'}>
+                            My Wallets
+                        </ResponsiveNavLink>
                     </div>
 
                     {/* Responsive Settings Options */}
