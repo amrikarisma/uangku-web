@@ -93,11 +93,11 @@ const EditWallet = ({ id }) => {
         <AppLayout
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Create New Wallet
+                    Edit Wallet
                 </h2>
             }>
             <Head>
-                <title>Create New Wallet - Uangku</title>
+                <title>Edit Wallet - Uangku</title>
             </Head>
 
             <div className="py-12">
