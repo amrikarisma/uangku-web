@@ -7,8 +7,46 @@ import Label from '@/components/Label'
 import { DateRangePicker } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css'
 import Pagination from 'react-js-pagination'
+import {
+    startOfDay,
+    endOfDay,
+    startOfMonth,
+    lastDayOfMonth,
+    subMonths,
+    addMonths,
+    subDays,
+} from 'date-fns'
 
 const Transaction = () => {
+    const Ranges = [
+        {
+            label: '7 Hari Terakhir',
+            value: [startOfDay(subDays(new Date(), 6)), endOfDay(new Date())],
+        },
+        {
+            label: '30 Hari Terakhir',
+            value: [startOfDay(subDays(new Date(), 30)), endOfDay(new Date())],
+        },
+        {
+            label: 'Bulan Lalu',
+            value: [
+                startOfMonth(subMonths(new Date(), 1)),
+                lastDayOfMonth(subMonths(new Date(), 1)),
+            ],
+        },
+        {
+            label: 'Bulan Ini',
+            value: [startOfMonth(new Date()), lastDayOfMonth(new Date())],
+        },
+        {
+            label: 'Bulan Depan',
+            value: [
+                startOfMonth(addMonths(new Date(), 1)),
+                lastDayOfMonth(addMonths(new Date(), 1)),
+            ],
+        },
+    ]
+
     const startDate = new Date(
         new Date().getFullYear(),
         new Date().getMonth() - 1,
@@ -140,6 +178,7 @@ const Transaction = () => {
                                         }}
                                         defaultValue={dateRange}
                                         value={dateRange}
+                                        ranges={Ranges}
                                     />
                                 </div>
                             </div>
