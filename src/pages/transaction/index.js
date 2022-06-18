@@ -196,6 +196,11 @@ const Transaction = () => {
                                                                 .title
                                                         }
                                                     </div>
+                                                    <div className="italic">
+                                                        {
+                                                            transaction.description
+                                                        }
+                                                    </div>
                                                     <div
                                                         className={`${
                                                             transaction
