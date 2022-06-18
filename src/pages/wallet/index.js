@@ -135,7 +135,7 @@ const Wallets = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <div>
+                            <div className="mt-10">
                                 <Pagination
                                     activePage={
                                         wallets?.current_page

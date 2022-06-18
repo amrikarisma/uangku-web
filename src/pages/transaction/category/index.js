@@ -126,7 +126,7 @@ const Category = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <div>
+                            <div className="mt-10">
                                 <Pagination
                                     activePage={
                                         categories?.current_page

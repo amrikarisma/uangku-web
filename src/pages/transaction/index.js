@@ -213,7 +213,7 @@ const Transaction = () => {
                                             <tr
                                                 transaction="{transaction}"
                                                 key={transaction.id}>
-                                                <td className="md:p-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                                <td className="md:p-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/5">
                                                     <div className="md:inline text-center font-bold md:pr-4 text-2xl md:text-xl">
                                                         {getViewDate(
                                                             transaction.date,
@@ -227,7 +227,7 @@ const Transaction = () => {
                                                         )}
                                                     </div>
                                                 </td>
-                                                <td className="md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                                <td className="md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/3">
                                                     <div className="font-bold">
                                                         {
                                                             transaction
@@ -255,7 +255,7 @@ const Transaction = () => {
                                                                 .type
                                                         }
                                                     </div>
-                                                    <div className="mt-2 mb-10">
+                                                    <div className="mt-2 sm:mb-10 md:mb-0 ">
                                                         <Link
                                                             href={`/transaction/edit/${transaction.id}`}>
                                                             <a className="mr-4 text-slate-600">
@@ -279,7 +279,7 @@ const Transaction = () => {
                                                         transaction.amount > 0
                                                             ? 'text-green-600'
                                                             : 'text-red-600'
-                                                    } text-right font-bold`}>
+                                                    } text-right font-bold md:w-1/3`}>
                                                     {formatCurrency(
                                                         transaction.amount,
                                                     )}
@@ -289,7 +289,7 @@ const Transaction = () => {
                                     )}
                                 </tbody>
                             </table>
-                            <div>
+                            <div className="mt-10">
                                 <Pagination
                                     activePage={
                                         transactions?.transactions?.current_page
