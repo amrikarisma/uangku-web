@@ -4,6 +4,7 @@ import 'styles/style.scss'
 import * as ga from '../lib/ga'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import NextNProgress from 'nextjs-progressbar'
 
 function App({ Component, pageProps }) {
     const router = useRouter()
@@ -12,6 +13,7 @@ function App({ Component, pageProps }) {
         const handleRouteChange = url => {
             ga.pageview(url)
         }
+
         //When the component is mounted, subscribe to router changes
         //and log those page views
         router.events.on('routeChangeComplete', handleRouteChange)
@@ -23,7 +25,12 @@ function App({ Component, pageProps }) {
         }
     }, [router.events])
 
-    return <Component {...pageProps} />
+    return (
+        <>
+            <NextNProgress />
+            <Component {...pageProps} />
+        </>
+    )
 }
 
 export default App
