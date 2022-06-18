@@ -51,6 +51,11 @@ const Navigation = ({ user }) => {
                                 active={router.pathname === '/transaction'}>
                                 Transaction
                             </NavLink>
+                            <NavLink
+                                href="/wallet"
+                                active={router.pathname === '/wallet'}>
+                                My Wallets
+                            </NavLink>
                         </div>
                     </div>
 

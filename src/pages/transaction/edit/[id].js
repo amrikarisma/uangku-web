@@ -18,6 +18,8 @@ const CreateTransaction = ({ id }) => {
     const [types] = useState(['income', 'spending'])
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
+    const [wallets, setWallets] = useState([])
+    const [wallet, setWallet] = useState('')
     const [date, setDate] = useState(new Date())
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
@@ -27,10 +29,23 @@ const CreateTransaction = ({ id }) => {
     useEffect(() => {
         fetchData()
     }, [])
+    const getWallets = async value => {
+        await axios
+            .get(`/api/wallet?showAll=1`)
+            .then(res => {
+                setWallets(res.data.data)
+            })
+            .catch(error => {
+                setErrors(error)
+                if (error.response.status !== 409) throw error
+            })
+    }
     const fetchData = async () => {
         await axios
             .get(`/api/transaction/${id}`)
             .then(res => {
+                getWallets()
+                setWallet(res.data.data.wallet_id)
                 getCategory(res.data.data.transaction_category.type)
                 setAmount(
                     res.data.data.amount < 0
@@ -42,7 +57,7 @@ const CreateTransaction = ({ id }) => {
                         ? res.data.data.amount * -1
                         : res.data.data.amount,
                 )
-                setDescription(res.data.data.description)
+                setDescription(res.data.data.description ?? '')
                 setType(res.data.data.transaction_category.type)
                 setCategory(res.data.data.category_id)
                 setDate(new Date(res.data.data.date))
@@ -87,6 +102,7 @@ const CreateTransaction = ({ id }) => {
         const fetchData = async () => {
             await axios
                 .put(`/api/transaction/update/${id}`, {
+                    wallet,
                     amount,
                     description,
                     category,
@@ -121,6 +137,29 @@ const CreateTransaction = ({ id }) => {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="px-2 py-6 md:px-6 py-6 bg-white border-b border-gray-200">
                             <form onSubmit={submitForm}>
+                                <div className="mt-4">
+                                    <Label htmlFor="wallet">My Wallet</Label>
+                                    <select
+                                        name="wallet"
+                                        className="mt-1 block w-full"
+                                        onChange={event =>
+                                            setWallet(event.target.value)
+                                        }
+                                        value={wallet}
+                                        required>
+                                        <option value={``} disabled>
+                                            Select Wallet
+                                        </option>
+
+                                        {wallets?.map(item => (
+                                            <option
+                                                key={item.id}
+                                                value={`${item.id}`}>
+                                                {item.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <div className="mt-4">
                                     <Label htmlFor="type">Type</Label>
                                     <select
@@ -187,7 +226,6 @@ const CreateTransaction = ({ id }) => {
                                         }}
                                         value={`${description}`}
                                         className="mt-1 block w-full"
-                                        required
                                     />
                                 </div>
                                 <div className="mt-4">

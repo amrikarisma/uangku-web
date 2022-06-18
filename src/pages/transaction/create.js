@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
@@ -18,10 +18,27 @@ const CreateTransaction = () => {
     const [types] = useState(['income', 'spending'])
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
+    const [wallets, setWallets] = useState([])
+    const [wallet, setWallet] = useState('')
     const [date, setDate] = useState(new Date())
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const router = useRouter()
+
+    useEffect(() => {
+        getWallets()
+    }, [])
+    const getWallets = async value => {
+        await axios
+            .get(`/api/wallet?showAll=1`)
+            .then(res => {
+                setWallets(res.data.data)
+            })
+            .catch(error => {
+                setErrors(error)
+                if (error.response.status !== 409) throw error
+            })
+    }
 
     const getCategory = async value => {
         await axios
@@ -60,6 +77,7 @@ const CreateTransaction = () => {
         const fetchData = async () => {
             await axios
                 .post('/api/transaction/store', {
+                    wallet,
                     amount,
                     description,
                     category,
@@ -95,8 +113,32 @@ const CreateTransaction = () => {
                         <div className="px-2 py-6 md:px-6 py-6 bg-white border-b border-gray-200">
                             <form onSubmit={submitForm}>
                                 <div className="mt-4">
+                                    <Label htmlFor="wallet">My Wallet</Label>
+                                    <select
+                                        name="wallet"
+                                        className="mt-1 block w-full"
+                                        onChange={event =>
+                                            setWallet(event.target.value)
+                                        }
+                                        value={wallet}
+                                        required>
+                                        <option value={``} disabled>
+                                            Select Wallet
+                                        </option>
+
+                                        {wallets?.map(item => (
+                                            <option
+                                                key={item.id}
+                                                value={`${item.id}`}>
+                                                {item.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="mt-4">
                                     <Label htmlFor="type">Type</Label>
                                     <select
+                                        name="type"
                                         className="mt-1 block w-full"
                                         onChange={event => {
                                             setType(event.target.value)
@@ -116,6 +158,7 @@ const CreateTransaction = () => {
                                 <div className="mt-4">
                                     <Label htmlFor="category">Category</Label>
                                     <select
+                                        name="category"
                                         className="mt-1 block w-full"
                                         onChange={event =>
                                             setCategory(event.target.value)
@@ -160,7 +203,6 @@ const CreateTransaction = () => {
                                         }}
                                         value={`${description}`}
                                         className="mt-1 block w-full"
-                                        required
                                     />
                                 </div>
                                 <div className="mt-4">

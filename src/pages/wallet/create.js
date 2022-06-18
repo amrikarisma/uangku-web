@@ -1,34 +1,39 @@
 /* eslint-disable no-unused-vars */
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
 import { useRouter } from 'next/router'
 
-const CreateCategory = () => {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [type, setType] = useState('')
-    const [types] = useState(['income', 'spending'])
+const CreateWallet = () => {
+    const [name, setName] = useState('')
+    const [categories, setCategories] = useState([])
+    const [category, setCategory] = useState('')
+    const [start_balance, setStartBalance] = useState(0)
+    const [start_balance_formated, setStartBalanceFormated] = useState(0)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const router = useRouter()
+
+    useEffect(() => {
+        getCategory()
+    }, [])
 
     const submitForm = async event => {
         event.preventDefault()
         const fetchData = async () => {
             await axios
-                .post('/api/transaction/category/store', {
-                    title,
-                    description,
-                    type,
+                .post('/api/wallet/store', {
+                    name,
+                    category,
+                    start_balance,
                 })
                 .then(res => {
                     setStatus(res.data.status)
-                    router.push('/transaction/category')
+                    router.push('/wallet')
                 })
                 .catch(error => {
                     setErrors(error)
@@ -38,15 +43,47 @@ const CreateCategory = () => {
         fetchData()
     }
 
+    const currencyInput = value => {
+        let tempValue = value
+            .replace(/[Rp]/gi, '')
+            .toString()
+            .replaceAll(' ', '')
+            .replaceAll('.', '')
+
+        setStartBalance(tempValue)
+        formatCurrency(tempValue)
+    }
+
+    const formatCurrency = tempValue => {
+        let formatCurrency = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(tempValue)
+        setStartBalanceFormated(formatCurrency)
+    }
+
+    const getCategory = async value => {
+        await axios
+            .get(`/api/wallet/category`)
+            .then(res => {
+                setCategories(res.data.data)
+            })
+            .catch(error => {
+                setErrors(error)
+                if (error.response.status !== 409) throw error
+            })
+    }
+
     return (
         <AppLayout
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Category
+                    Create New Wallet
                 </h2>
             }>
             <Head>
-                <title>Category - Uangku</title>
+                <title>Create New Wallet - Uangku</title>
             </Head>
 
             <div className="py-12">
@@ -55,46 +92,51 @@ const CreateCategory = () => {
                         <div className="px-2 py-6 md:px-6 py-6 bg-white border-b border-gray-200">
                             <form onSubmit={submitForm}>
                                 <div>
-                                    <Label htmlFor="title">Title</Label>
+                                    <Label htmlFor="name">Name</Label>
                                     <Input
-                                        name="title"
+                                        name="name"
                                         type="text"
                                         onChange={event =>
-                                            setTitle(event.target.value)
+                                            setName(event.target.value)
                                         }
                                         className="mt-1 block w-full"
                                         required
                                     />
                                 </div>
                                 <div className="mt-4">
-                                    <Label htmlFor="description">
-                                        Description
+                                    <Label htmlFor="start_balance">
+                                        Starting Balance
                                     </Label>
                                     <Input
-                                        name="description"
+                                        name="start_balance"
                                         type="text"
-                                        onChange={event =>
-                                            setDescription(event.target.value)
-                                        }
+                                        onChange={event => {
+                                            currencyInput(event.target.value)
+                                        }}
+                                        value={`${start_balance_formated}`}
                                         className="mt-1 block w-full"
                                         required
                                     />
                                 </div>
                                 <div className="mt-4">
-                                    <Label htmlFor="type">Type</Label>
+                                    <Label htmlFor="category">Category</Label>
                                     <select
                                         className="mt-1 block w-full"
                                         onChange={event =>
-                                            setType(event.target.value)
+                                            setCategory(event.target.value)
                                         }
-                                        value={type}
+                                        value={category}
                                         required>
                                         <option value={``} disabled>
-                                            Select Type
+                                            Select Category
                                         </option>
 
-                                        {types.map(item => (
-                                            <option key={item}>{item}</option>
+                                        {categories.map(item => (
+                                            <option
+                                                key={item.id}
+                                                value={`${item.id}`}>
+                                                {item.name}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
@@ -110,4 +152,4 @@ const CreateCategory = () => {
     )
 }
 
-export default CreateCategory
+export default CreateWallet
