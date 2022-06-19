@@ -5,7 +5,7 @@ import NavLink from '@/components/NavLink'
 import ResponsiveNavLink, {
     ResponsiveNavButton,
 } from '@/components/ResponsiveNavLink'
-import { DropdownButton } from '@/components/DropdownLink'
+import DropdownLink, { DropdownButton } from '@/components/DropdownLink'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -82,6 +82,11 @@ const Navigation = ({ user }) => {
                                     </div>
                                 </button>
                             }>
+                            <DropdownLink
+                                href="/setting"
+                                active={router.pathname === '/setting'}>
+                                Setting
+                            </DropdownLink>
                             {/* Authentication */}
                             <DropdownButton onClick={logout}>
                                 Logout
@@ -180,6 +185,11 @@ const Navigation = ({ user }) => {
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            <ResponsiveNavLink
+                                href="/setting"
+                                active={router.pathname === '/setting'}>
+                                Setting
+                            </ResponsiveNavLink>
                             {/* Authentication */}
                             <ResponsiveNavButton onClick={logout}>
                                 Logout

@@ -206,7 +206,7 @@ const CreateTransaction = () => {
                                     />
                                 </div>
                                 <div className="mt-4">
-                                    <Label htmlFor="description">Date</Label>
+                                    <Label htmlFor="date">Date</Label>
                                     <DatePicker
                                         block
                                         size="lg"
