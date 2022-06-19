@@ -1,11 +1,11 @@
+/* eslint-disable no-unused-vars */
 import Button from '@/components/Button'
 import Label from '@/components/Label'
 import AppLayout from '@/components/Layouts/AppLayout'
 import axios from '@/lib/axios'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Input } from 'rsuite'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
 
 const Setting = () => {
     const [categories, setCategories] = useState([])
@@ -14,14 +14,13 @@ const Setting = () => {
     const [setting, setSetting] = useState([])
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
-    const router = useRouter()
 
     useEffect(() => {
         getCategory()
         getSetting()
     }, [])
 
-    const getCategory = async value => {
+    const getCategory = async () => {
         await axios
             .get(`/api/transaction/category?showAll=1`)
             .then(res => {
@@ -71,7 +70,11 @@ const Setting = () => {
                     value,
                 })
                 .then(res => {
-                    setStatus(res.data.status)
+                    if (res.data.status) {
+                        Notify.success('Berhasil disimpan!')
+                    } else {
+                        Notify.failure('Gagal disimpan!')
+                    }
                 })
                 .catch(error => {
                     setErrors(error)
@@ -81,7 +84,6 @@ const Setting = () => {
         setting.map(item => {
             fetchData(item.key, item.value)
         })
-        // router.push('/transaction')
     }
     return (
         <AppLayout

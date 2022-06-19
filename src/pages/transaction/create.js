@@ -9,6 +9,7 @@ import Button from '@/components/Button'
 import { useRouter } from 'next/router'
 import { DatePicker } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css'
+import { Notify } from 'notiflix'
 
 const CreateTransaction = () => {
     const [amount, setAmount] = useState(0)
@@ -87,6 +88,11 @@ const CreateTransaction = () => {
                 .then(res => {
                     setStatus(res.data.status)
                     router.push('/transaction')
+                    if (res.data.status) {
+                        Notify.success('Berhasil disimpan!')
+                    } else {
+                        Notify.failure('Gagal disimpan!')
+                    }
                 })
                 .catch(error => {
                     setErrors(error)

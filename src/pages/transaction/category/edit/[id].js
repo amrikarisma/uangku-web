@@ -7,6 +7,7 @@ import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
 import { useRouter } from 'next/router'
+import { Notify } from 'notiflix'
 
 const Category = ({ id }) => {
     const [title, setTitle] = useState('')
@@ -44,6 +45,11 @@ const Category = ({ id }) => {
                 .then(res => {
                     setStatus(res.data.status)
                     router.push('/transaction/category')
+                    if (res.data.status) {
+                        Notify.success('Berhasil disimpan!')
+                    } else {
+                        Notify.failure('Gagal disimpan!')
+                    }
                 })
                 .catch(error => {
                     setErrors(error)

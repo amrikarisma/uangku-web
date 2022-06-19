@@ -7,6 +7,7 @@ import Input from '@/components/Input'
 import Label from '@/components/Label'
 import Button from '@/components/Button'
 import { useRouter } from 'next/router'
+import { Notify } from 'notiflix'
 
 const EditWallet = ({ id }) => {
     const [name, setName] = useState('')
@@ -48,6 +49,11 @@ const EditWallet = ({ id }) => {
                 .then(res => {
                     setStatus(res.data.status)
                     router.push('/wallet')
+                    if (res.data.status) {
+                        Notify.success('Berhasil disimpan!')
+                    } else {
+                        Notify.failure('Gagal disimpan!')
+                    }
                 })
                 .catch(error => {
                     setErrors(error)
