@@ -50,7 +50,6 @@ const Reports = () => {
                                     <div>Saldo Awal</div>
                                     <div className="amount-balance">
                                         <strong>
-                                            +
                                             {formatCurrency(
                                                 report.start_balance,
                                             )}
@@ -63,7 +62,6 @@ const Reports = () => {
                                     <div>Saldo Akhir</div>
                                     <div className="amount-balance">
                                         <strong>
-                                            +
                                             {formatCurrency(
                                                 report.current_balance,
                                             )}
@@ -78,7 +76,6 @@ const Reports = () => {
                                     <div>Pemasukan Bersih</div>
                                     <div className="amount-balance">
                                         <strong className="text-xl">
-                                            +
                                             {formatCurrency(report.nett_income)}
                                         </strong>
                                     </div>
@@ -91,7 +88,7 @@ const Reports = () => {
                                     <div>Pemasukan</div>
                                     <div className="amount-balance">
                                         <strong className="text-green-600 ">
-                                            +{formatCurrency(report.income)}
+                                            {formatCurrency(report.income)}
                                         </strong>
                                     </div>
                                 </div>
