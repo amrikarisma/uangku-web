@@ -3,15 +3,71 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
 import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine'
+import 'rsuite/dist/rsuite.min.css'
+import { DateRangePicker } from 'rsuite'
+
+import {
+    startOfDay,
+    endOfDay,
+    startOfMonth,
+    lastDayOfMonth,
+    subMonths,
+    addMonths,
+    subDays,
+} from 'date-fns'
 const Reports = () => {
+    const Ranges = [
+        {
+            label: '7 Hari Terakhir',
+            value: [startOfDay(subDays(new Date(), 6)), endOfDay(new Date())],
+        },
+        {
+            label: '30 Hari Terakhir',
+            value: [startOfDay(subDays(new Date(), 30)), endOfDay(new Date())],
+        },
+        {
+            label: 'Bulan Lalu',
+            value: [
+                startOfMonth(subMonths(new Date(), 1)),
+                lastDayOfMonth(subMonths(new Date(), 1)),
+            ],
+        },
+        {
+            label: 'Bulan Ini',
+            value: [startOfMonth(new Date()), lastDayOfMonth(new Date())],
+        },
+        {
+            label: 'Bulan Depan',
+            value: [
+                startOfMonth(addMonths(new Date(), 1)),
+                lastDayOfMonth(addMonths(new Date(), 1)),
+            ],
+        },
+    ]
+    const startDate = startOfMonth(new Date())
+    const endDate = new Date()
+    const [dateRange, setDateRange] = useState([startDate, endDate])
     const [report, setReport] = useState([])
 
     useEffect(() => {
         fetchData()
     }, [])
-    const fetchData = async (pageNumber = 1) => {
+    const fetchData = async (pageNumber = 1, date = null) => {
+        date = date ? date : dateRange
+        let filterStartDate = `${date[0].getFullYear()}-${
+            date[0].getMonth() + 1
+        }-${date[0].getDate()}`
+        let filterEndDate = date[1]
+            ? `${date[1].getFullYear()}-${
+                  date[1].getMonth() + 1
+              }-${date[1].getDate()}`
+            : `${date[0].getFullYear()}-${
+                  date[0].getMonth() + 1
+              }-${date[0].getDate()}`
         await axios
-            .get(`/api/report?page=${pageNumber}`)
+            .get(
+                `/api/report?page=${pageNumber}&startDate=${filterStartDate}&endDate=${filterEndDate}`,
+            )
             .then(res => setReport(res.data.data))
             .catch(error => {
                 if (error.response.status !== 409) throw error
@@ -30,12 +86,27 @@ const Reports = () => {
     return (
         <AppLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Reports
-                    <p className="text-sm font-light italic">
-                        Bulan ini ({report.range_date})
-                    </p>
-                </h2>
+                <div className="sm:flex">
+                    <div className="sm:w-1/2">
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                            Reports
+                        </h2>
+                    </div>
+                    <div className="py-4 sm:py-0 sm:w-1/2">
+                        <DateRangePicker
+                            block
+                            size="lg"
+                            showOneCalendar
+                            onChange={event => {
+                                setDateRange(event)
+                                fetchData(1, event)
+                            }}
+                            defaultValue={dateRange}
+                            value={dateRange}
+                            ranges={Ranges}
+                        />
+                    </div>
+                </div>
             }>
             <Head>
                 <title>Reports - Uangku</title>
