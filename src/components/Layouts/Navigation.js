@@ -40,21 +40,14 @@ const Navigation = ({ user }) => {
                                 Dashboard
                             </NavLink>
                             <NavLink
-                                href="/transaction/category"
-                                active={
-                                    router.pathname === '/transaction/category'
-                                }>
-                                Category
-                            </NavLink>
-                            <NavLink
                                 href="/transaction"
                                 active={router.pathname === '/transaction'}>
                                 Transaction
                             </NavLink>
                             <NavLink
-                                href="/wallet"
-                                active={router.pathname === '/wallet'}>
-                                My Wallets
+                                href="/report"
+                                active={router.pathname === '/report'}>
+                                Reports
                             </NavLink>
                         </div>
                     </div>
@@ -82,6 +75,18 @@ const Navigation = ({ user }) => {
                                     </div>
                                 </button>
                             }>
+                            <DropdownLink
+                                href="/wallet"
+                                active={router.pathname === '/wallet'}>
+                                Wallets
+                            </DropdownLink>
+                            <DropdownLink
+                                href="/transaction/category"
+                                active={
+                                    router.pathname === '/transaction/category'
+                                }>
+                                Category
+                            </DropdownLink>
                             <DropdownLink
                                 href="/setting"
                                 active={router.pathname === '/setting'}>
@@ -137,21 +142,14 @@ const Navigation = ({ user }) => {
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href="/transaction/category"
-                            active={
-                                router.pathname === '/transaction/category'
-                            }>
-                            Category
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
                             href="/transaction"
                             active={router.pathname === '/transaction'}>
                             Transaction
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href="/wallet"
-                            active={router.pathname === '/wallet'}>
-                            My Wallets
+                            href="/report"
+                            active={router.pathname === '/report'}>
+                            Reports
                         </ResponsiveNavLink>
                     </div>
 
@@ -185,6 +183,18 @@ const Navigation = ({ user }) => {
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            <ResponsiveNavLink
+                                href="/wallet"
+                                active={router.pathname === '/wallet'}>
+                                Wallets
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/transaction/category"
+                                active={
+                                    router.pathname === '/transaction/category'
+                                }>
+                                Category
+                            </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 href="/setting"
                                 active={router.pathname === '/setting'}>
