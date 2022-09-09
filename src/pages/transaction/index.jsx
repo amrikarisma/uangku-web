@@ -17,6 +17,8 @@ import {
     subDays,
 } from 'date-fns'
 
+let startDate, endDate
+
 const Transaction = () => {
     const Ranges = [
         {
@@ -47,16 +49,34 @@ const Transaction = () => {
         },
     ]
 
-    const startDate = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth() - 1,
-        1,
-    )
-    const endDate = new Date()
+    const getLocalDateRange = () => {
+        let last_start_date = localStorage.getItem('last_start_date')
+        let last_end_date = localStorage.getItem('last_end_date')
+        if (last_start_date && last_end_date) {
+            startDate = new Date(JSON.parse(last_start_date))
+            startDate = new Date(JSON.parse(last_end_date))
+        } else {
+            startDate = new Date(
+                new Date().getFullYear(),
+                new Date().getMonth() - 1,
+                1,
+            )
+            endDate = new Date()
+        }
+    }
+
+    const setLocalDateRange = event => {
+        let last_start_date = event[0]
+        let last_end_date = event[1]
+        localStorage.setItem('last_start_date', JSON.stringify(last_start_date))
+        localStorage.getItem('last_end_date', JSON.stringify(last_end_date))
+    }
+
     const [transactions, setTransactions] = useState([])
     const [dateRange, setDateRange] = useState([startDate, endDate])
 
     useEffect(() => {
+        getLocalDateRange()
         fetchData()
     }, [])
     const fetchData = async (pageNumber = 1, date = null) => {
@@ -174,6 +194,7 @@ const Transaction = () => {
                                         showOneCalendar
                                         onChange={event => {
                                             setDateRange(event)
+                                            setLocalDateRange(event)
                                             fetchData(1, event)
                                         }}
                                         defaultValue={dateRange}
