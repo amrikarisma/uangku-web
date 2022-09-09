@@ -47,7 +47,7 @@ const EditTransaction = ({ id }) => {
             .then(res => {
                 getWallets()
                 setWallet(res.data.data.wallet_id)
-                getCategory(res.data.data.transaction_category.type)
+                getCategories(res.data.data.transaction_category.type)
                 setAmount(
                     res.data.data.amount < 0
                         ? res.data.data.amount * -1
@@ -67,7 +67,7 @@ const EditTransaction = ({ id }) => {
                 if (error.response.status !== 409) throw error
             })
     }
-    const getCategory = async value => {
+    const getCategories = async value => {
         await axios
             .get(`/api/transaction/category?showAll=1&type=${value}`)
             .then(res => {
@@ -172,7 +172,7 @@ const EditTransaction = ({ id }) => {
                                         className="mt-1 block w-full"
                                         onChange={event => {
                                             setType(event.target.value)
-                                            getCategory(event.target.value)
+                                            getCategories(event.target.value)
                                         }}
                                         value={type}
                                         required>

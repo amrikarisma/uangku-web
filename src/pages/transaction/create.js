@@ -43,7 +43,7 @@ const CreateTransaction = () => {
             })
     }
 
-    const getCategory = async value => {
+    const getCategories = async value => {
         await axios
             .get(`/api/transaction/category?showAll=1&type=${value}`)
             .then(res => {
@@ -116,8 +116,13 @@ const CreateTransaction = () => {
     }
     const getLastTrans = () => {
         let data = JSON.parse(localStorage.getItem('last_transaction'))
-        setType(data?.type)
+        if (data?.type) {
+            setType(data?.type)
+            getCategories(data?.type)
+        }
+
         setCategory(data?.category)
+
         setWallet(data?.wallet)
         if (data?.date) {
             setDate(new Date(data.date))
@@ -170,7 +175,7 @@ const CreateTransaction = () => {
                                         className="mt-1 block w-full"
                                         onChange={event => {
                                             setType(event.target.value)
-                                            getCategory(event.target.value)
+                                            getCategories(event.target.value)
                                         }}
                                         value={type}
                                         required>
