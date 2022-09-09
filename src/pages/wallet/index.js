@@ -69,13 +69,13 @@ const Wallets = () => {
                             <table className="border-collapse table-auto w-full text-sm">
                                 <thead>
                                     <tr>
-                                        <td className="border-b dark:border-slate-600 font-medium p-4 md:pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                        <td className="border-b dark:border-slate-600 font-medium p-4 md:pl-8 pt-0 pb-3 text-slate-400 text-left">
                                             Name
                                         </td>
-                                        <td className="border-b dark:border-slate-600 font-medium p-4 md:pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                        <td className="border-b dark:border-slate-600 font-medium p-4 md:pl-8 pt-0 pb-3 text-slate-400 text-left">
                                             Starting Balance
                                         </td>
-                                        <td className="border-b dark:border-slate-600 font-medium p-4 md:pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                        <td className="border-b dark:border-slate-600 font-medium p-4 md:pl-8 pt-0 pb-3 text-slate-400 text-left">
                                             Action
                                         </td>
                                     </tr>
