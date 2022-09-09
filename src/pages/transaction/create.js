@@ -12,22 +12,24 @@ import 'rsuite/dist/rsuite.min.css'
 import { Notify } from 'notiflix'
 
 const CreateTransaction = () => {
+    const [lastState, setLastState] = useState({})
     const [amount, setAmount] = useState(0)
     const [amountFormated, setAmountFormated] = useState('')
     const [description, setDescription] = useState('')
-    const [type, setType] = useState('')
+    const [type, setType] = useState(lastState.type ? lastState.type : '')
     const [types] = useState(['income', 'spending'])
     const [categories, setCategories] = useState([])
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(lastState.category ? lastState.category : '')
     const [wallets, setWallets] = useState([])
-    const [wallet, setWallet] = useState('')
-    const [date, setDate] = useState(new Date())
+    const [wallet, setWallet] = useState(lastState.wallet ? lastState.wallet : '')
+    const [date, setDate] = useState(lastState.date ? lastState.date : new Date())
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const router = useRouter()
 
     useEffect(() => {
         getWallets()
+        setLastState(localStorage.getItem('last_transaction'))
     }, [])
     const getWallets = async value => {
         await axios
@@ -75,6 +77,7 @@ const CreateTransaction = () => {
 
     const submitForm = async event => {
         event.preventDefault()
+        setLastTrans()
         const fetchData = async () => {
             await axios
                 .post('/api/transaction/store', {
@@ -100,6 +103,16 @@ const CreateTransaction = () => {
                 })
         }
         fetchData()
+    }
+
+    const setLastTrans = () => {
+        data = {
+            type: type,
+            category: category,
+            wallet: wallet,
+            date: date,
+        }
+        localStorage.setItem('last_transaction', data)
     }
 
     return (
