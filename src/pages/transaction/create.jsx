@@ -62,8 +62,6 @@ const CreateTransaction = () => {
         await axios
             .get(`/api/transaction/dept/${value}`)
             .then(res => {
-                // eslint-disable-next-line no-console
-                console.log(res.data)
                 setDeptList(res.data.data)
             })
             .catch(error => {

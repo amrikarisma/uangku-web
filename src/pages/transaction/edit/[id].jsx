@@ -85,8 +85,6 @@ const EditTransaction = ({ id }) => {
                 getDeptList(res.data.data.category_id)
             })
             .catch(error => {
-                // eslint-disable-next-line no-console
-                console.log(error)
                 if (error.response.status !== 409) throw error
             })
     }
