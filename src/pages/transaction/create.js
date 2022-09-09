@@ -119,7 +119,9 @@ const CreateTransaction = () => {
         setType(data?.type)
         setCategory(data?.category)
         setWallet(data?.wallet)
-        setDate(data?.date)
+        if (data?.date) {
+            setDate(new Date(data.date))
+        }
     }
 
     return (
