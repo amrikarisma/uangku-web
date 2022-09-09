@@ -61,7 +61,7 @@ const EditTransaction = ({ id }) => {
                 setDescription(res.data.data.description ?? '')
                 setType(res.data.data.transaction_category.type)
                 setCategory(res.data.data.category_id)
-                setDate(new Date(res.data.data.date))
+                setDate(new Date(`${res.data.data.date}`))
             })
             .catch(error => {
                 if (error.response.status !== 409) throw error

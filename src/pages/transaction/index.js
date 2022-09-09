@@ -61,16 +61,13 @@ const Transaction = () => {
     }, [])
     const fetchData = async (pageNumber = 1, date = null) => {
         date = date ? date : dateRange
-        let filterStartDate = `${date[0].getFullYear()}-${
-            date[0].getMonth() + 1
-        }-${date[0].getDate()}`
+        let filterStartDate = `${date[0].getFullYear()}-${date[0].getMonth() + 1
+            }-${date[0].getDate()}`
         let filterEndDate = date[1]
-            ? `${date[1].getFullYear()}-${
-                  date[1].getMonth() + 1
-              }-${date[1].getDate()}`
-            : `${date[0].getFullYear()}-${
-                  date[0].getMonth() + 1
-              }-${date[0].getDate()}`
+            ? `${date[1].getFullYear()}-${date[1].getMonth() + 1
+            }-${date[1].getDate()}`
+            : `${date[0].getFullYear()}-${date[0].getMonth() + 1
+            }-${date[0].getDate()}`
         await axios
             .get(
                 `/api/transaction?page=${pageNumber}&startDate=${filterStartDate}&endDate=${filterEndDate}`,
@@ -106,7 +103,7 @@ const Transaction = () => {
 
     const getViewDate = (input, view) => {
         let output
-        const date = new Date(input)
+        const date = new Date(`${input}`)
         const month = date.toLocaleString('default', { month: 'long' })
         if (view == 'day') {
             output = `${date.getDate()}`
@@ -157,11 +154,10 @@ const Transaction = () => {
                                     <div className="flex justify-between">
                                         <span>Saldo Saat ini</span>
                                         <span
-                                            className={`${
-                                                transactions.total < 0
+                                            className={`${transactions.total < 0
                                                     ? 'text-red-600'
                                                     : 'text-green-600'
-                                            } font-bold mt-2`}>
+                                                } font-bold mt-2`}>
                                             {formatCurrency(transactions.total)}
                                         </span>
                                     </div>
@@ -229,14 +225,13 @@ const Transaction = () => {
                                                         }
                                                     </div>
                                                     <div
-                                                        className={`${
-                                                            transaction
+                                                        className={`${transaction
                                                                 .transaction_category
                                                                 .type ==
-                                                            'spending'
+                                                                'spending'
                                                                 ? 'text-red-600'
                                                                 : 'text-green-600'
-                                                        } font-bold mt-2`}>
+                                                            } font-bold mt-2`}>
                                                         {
                                                             transaction
                                                                 .transaction_category
@@ -263,11 +258,10 @@ const Transaction = () => {
                                                     </div>
                                                 </td>
                                                 <td
-                                                    className={`${
-                                                        transaction.amount > 0
+                                                    className={`${transaction.amount > 0
                                                             ? 'text-green-600'
                                                             : 'text-red-600'
-                                                    } p-4 md:pl-8 text-right font-bold md:w-1/3`}>
+                                                        } p-4 md:pl-8 text-right font-bold md:w-1/3`}>
                                                     {formatCurrency(
                                                         transaction.amount,
                                                     )}
@@ -282,13 +276,13 @@ const Transaction = () => {
                                     activePage={
                                         transactions?.transactions?.current_page
                                             ? transactions?.transactions
-                                                  ?.current_page
+                                                ?.current_page
                                             : 0
                                     }
                                     itemsCountPerPage={
                                         transactions?.transactions?.per_page
                                             ? transactions?.transactions
-                                                  ?.per_page
+                                                ?.per_page
                                             : 0
                                     }
                                     totalItemsCount={

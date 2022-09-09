@@ -125,7 +125,7 @@ const CreateTransaction = () => {
 
         setWallet(data?.wallet)
         if (data?.date) {
-            setDate(new Date(data.date))
+            setDate(new Date(`${data.date}`))
         }
     }
 
