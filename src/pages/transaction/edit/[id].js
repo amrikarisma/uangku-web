@@ -11,7 +11,7 @@ import { DatePicker } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css'
 import { Notify } from 'notiflix'
 
-const CreateTransaction = ({ id }) => {
+const EditTransaction = ({ id }) => {
     const [amount, setAmount] = useState(0)
     const [amountFormated, setAmountFormated] = useState('')
     const [description, setDescription] = useState('')
@@ -237,6 +237,7 @@ const CreateTransaction = ({ id }) => {
                                 <div className="mt-4">
                                     <Label htmlFor="description">Date</Label>
                                     <DatePicker
+                                        format="yyyy-MM-dd HH:mm:ss"
                                         block
                                         size="lg"
                                         placeholder="Select Date Range"
@@ -260,7 +261,7 @@ const CreateTransaction = ({ id }) => {
     )
 }
 
-export default CreateTransaction
+export default EditTransaction
 
 export async function getServerSideProps({ params }) {
     return {

@@ -214,6 +214,7 @@ const CreateTransaction = () => {
                                 <div className="mt-4">
                                     <Label htmlFor="date">Date</Label>
                                     <DatePicker
+                                        format="yyyy-MM-dd HH:mm:ss"
                                         block
                                         size="lg"
                                         placeholder="Select Date Range"
