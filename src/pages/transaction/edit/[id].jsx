@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { DatePicker } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css'
 import { Notify } from 'notiflix'
+import formatCurrency from '@/lib/helper'
 
 const EditTransaction = ({ id }) => {
     const [amount, setAmount] = useState(0)
@@ -22,6 +23,8 @@ const EditTransaction = ({ id }) => {
     const [wallets, setWallets] = useState([])
     const [wallet, setWallet] = useState('')
     const [date, setDate] = useState(new Date())
+    const [deptList, setDeptList] = useState([])
+    const [dept, setDept] = useState('')
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
@@ -41,29 +44,49 @@ const EditTransaction = ({ id }) => {
                 if (error.response.status !== 409) throw error
             })
     }
+
+    const getDeptList = async value => {
+        await axios
+            .get(`/api/transaction/dept/${value}`)
+            .then(res => {
+                // eslint-disable-next-line no-console
+                setDeptList(res.data.data)
+                setDept(res.data.data?.t_detail?.tr_id)
+            })
+            .catch(error => {
+                setErrors(error)
+                if (error.response.status !== 409) throw error
+            })
+    }
+
     const fetchData = async () => {
         await axios
             .get(`/api/transaction/${id}`)
             .then(res => {
                 getWallets()
                 setWallet(res.data.data.wallet_id)
-                getCategories(res.data.data.transaction_category.type)
+                getCategories(res.data.data.t_category.type)
                 setAmount(
                     res.data.data.amount < 0
                         ? res.data.data.amount * -1
                         : res.data.data.amount,
                 )
-                formatCurrency(
+                let valueFormated = formatCurrency(
                     res.data.data.amount < 0
                         ? res.data.data.amount * -1
                         : res.data.data.amount,
                 )
+                setAmountFormated(valueFormated)
+
                 setDescription(res.data.data.description ?? '')
-                setType(res.data.data.transaction_category.type)
+                setType(res.data.data.t_category.type)
                 setCategory(res.data.data.category_id)
                 setDate(new Date(`${res.data.data.date}`))
+                getDeptList(res.data.data.category_id)
             })
             .catch(error => {
+                // eslint-disable-next-line no-console
+                console.log(error)
                 if (error.response.status !== 409) throw error
             })
     }
@@ -86,16 +109,8 @@ const EditTransaction = ({ id }) => {
             .replaceAll('.', '')
 
         setAmount(tempValue)
-        formatCurrency(tempValue)
-    }
-
-    const formatCurrency = tempValue => {
-        let formatCurrency = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-        }).format(tempValue)
-        setAmountFormated(formatCurrency)
+        let valueFormated = formatCurrency(tempValue)
+        setAmountFormated(valueFormated)
     }
 
     const submitForm = async event => {
@@ -107,6 +122,7 @@ const EditTransaction = ({ id }) => {
                     amount,
                     description,
                     category,
+                    dept,
                     date,
                     type,
                 })
@@ -187,9 +203,10 @@ const EditTransaction = ({ id }) => {
                                     <Label htmlFor="category">Category</Label>
                                     <select
                                         className="mt-1 block w-full"
-                                        onChange={event =>
+                                        onChange={event => {
                                             setCategory(event.target.value)
-                                        }
+                                            getDeptList(event.target.value)
+                                        }}
                                         value={category}
                                         required>
                                         <option value={``}>
@@ -205,6 +222,34 @@ const EditTransaction = ({ id }) => {
                                         ))}
                                     </select>
                                 </div>
+                                {deptList.length > 0 && (
+                                    <div className="mt-4">
+                                        <Label htmlFor="dept">Hutang</Label>
+                                        <select
+                                            className="mt-1 block w-full"
+                                            onChange={event => {
+                                                setDept(event.target.value)
+                                            }}
+                                            value={dept}
+                                            required>
+                                            <option value={``}>
+                                                Pilih Hutang
+                                            </option>
+
+                                            {deptList?.map(item => (
+                                                <option
+                                                    key={item.id}
+                                                    value={item.id}>
+                                                    {`${
+                                                        item.description
+                                                    } ${formatCurrency(
+                                                        item.amount,
+                                                    )}`}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
                                 <div className="mt-4">
                                     <Label htmlFor="amount">Amount</Label>
                                     <Input

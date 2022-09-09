@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { DatePicker } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css'
 import { Notify } from 'notiflix'
+import formatCurrency from '@/lib/helper'
 
 const CreateTransaction = () => {
     const [lastState, setLastState] = useState({})
@@ -23,6 +24,8 @@ const CreateTransaction = () => {
     const [wallets, setWallets] = useState([])
     const [wallet, setWallet] = useState('')
     const [date, setDate] = useState(new Date())
+    const [deptList, setDeptList] = useState([])
+    const [dept, setDept] = useState('')
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const router = useRouter()
@@ -55,6 +58,20 @@ const CreateTransaction = () => {
             })
     }
 
+    const getDeptList = async value => {
+        await axios
+            .get(`/api/transaction/dept/${value}`)
+            .then(res => {
+                // eslint-disable-next-line no-console
+                console.log(res.data)
+                setDeptList(res.data.data)
+            })
+            .catch(error => {
+                setErrors(error)
+                if (error.response.status !== 409) throw error
+            })
+    }
+
     const currencyInput = value => {
         let tempValue = value
             .replace(/[Rp]/gi, '')
@@ -63,16 +80,8 @@ const CreateTransaction = () => {
             .replaceAll('.', '')
 
         setAmount(tempValue)
-        formatCurrency(tempValue)
-    }
-
-    const formatCurrency = tempValue => {
-        let formatCurrency = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-        }).format(tempValue)
-        setAmountFormated(formatCurrency)
+        let valueFormated = formatCurrency(tempValue)
+        setAmountFormated(valueFormated)
     }
 
     const submitForm = async event => {
@@ -85,6 +94,7 @@ const CreateTransaction = () => {
                     amount,
                     description,
                     category,
+                    dept,
                     date,
                     type,
                 })
@@ -191,9 +201,10 @@ const CreateTransaction = () => {
                                     <select
                                         name="category"
                                         className="mt-1 block w-full"
-                                        onChange={event =>
+                                        onChange={event => {
                                             setCategory(event.target.value)
-                                        }
+                                            getDeptList(event.target.value)
+                                        }}
                                         value={category}
                                         required>
                                         <option value={``}>
@@ -209,6 +220,34 @@ const CreateTransaction = () => {
                                         ))}
                                     </select>
                                 </div>
+                                {deptList.length > 0 && (
+                                    <div className="mt-4">
+                                        <Label htmlFor="dept">Hutang</Label>
+                                        <select
+                                            className="mt-1 block w-full"
+                                            onChange={event => {
+                                                setDept(event.target.value)
+                                            }}
+                                            value={dept}
+                                            required>
+                                            <option value={``}>
+                                                Pilih Hutang
+                                            </option>
+
+                                            {deptList?.map(item => (
+                                                <option
+                                                    key={item.id}
+                                                    value={item.id}>
+                                                    {`${
+                                                        item.description
+                                                    } ${formatCurrency(
+                                                        item.amount,
+                                                    )}`}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
                                 <div className="mt-4">
                                     <Label htmlFor="amount">Amount</Label>
                                     <Input

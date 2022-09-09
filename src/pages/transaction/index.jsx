@@ -16,6 +16,7 @@ import {
     addMonths,
     subDays,
 } from 'date-fns'
+import { useRouter } from 'next/router'
 
 const Transaction = () => {
     const Ranges = [
@@ -60,15 +61,34 @@ const Transaction = () => {
 
     const [transactions, setTransactions] = useState([])
     const [dateRange, setDateRange] = useState([startDate, endDate])
+    const [categories, setCategories] = useState([])
+    const [category, setCategory] = useState()
+    const router = useRouter()
 
     useEffect(() => {
+        getCategories()
         fetchData()
     }, [])
-    const fetchData = async (pageNumber = 1, date = null) => {
-        date = date ? date : dateRange
+    const fetchData = async (pageNumber = 1, date = null, filter = null) => {
+        const { category, start_date, end_date } = router.query
+            ? router.query
+            : {}
+
+        let filterCategory = filter ? filter : category
+        if (filterCategory) {
+            setCategory(filterCategory)
+        }
+        if (!date && start_date && end_date) {
+            date = [new Date(start_date), new Date(end_date)]
+            setDateRange(date)
+        } else {
+            date = date ? date : dateRange
+        }
+
         let filterStartDate = `${date[0].getFullYear()}-${
             date[0].getMonth() + 1
         }-${date[0].getDate()}`
+
         let filterEndDate = date[1]
             ? `${date[1].getFullYear()}-${
                   date[1].getMonth() + 1
@@ -78,7 +98,9 @@ const Transaction = () => {
               }-${date[0].getDate()}`
         await axios
             .get(
-                `/api/transaction?page=${pageNumber}&startDate=${filterStartDate}&endDate=${filterEndDate}`,
+                `/api/transaction?page=${pageNumber}&startDate=${filterStartDate}&endDate=${filterEndDate}&category=${
+                    filterCategory ? filterCategory : ''
+                }`,
             )
             .then(res => {
                 setTransactions(res.data.data)
@@ -123,6 +145,36 @@ const Transaction = () => {
             output = `${date.getDate()} ${month} ${date.getFullYear()}`
         }
         return output
+    }
+
+    const getCategories = async () => {
+        await axios
+            .get(`/api/transaction/category?showAll=1`)
+            .then(res => {
+                setCategories(res.data.data)
+            })
+            .catch(error => {
+                if (error.response.status !== 409) throw error
+            })
+    }
+
+    const setQueryString = (key, value) => {
+        if (key == 'category') {
+            router.push({
+                pathname: router.pathname,
+                query: { category: value },
+            })
+            fetchData(1, null, value)
+        }
+        if (key == 'dateRange') {
+            router.push({
+                pathname: router.pathname,
+                query: {
+                    start_date: new Date(value[0]).toISOString().slice(0, 10),
+                    end_date: new Date(value[1]).toISOString().slice(0, 10),
+                },
+            })
+        }
     }
 
     return (
@@ -180,6 +232,7 @@ const Transaction = () => {
                                         onChange={event => {
                                             setDateRange(event)
                                             setLocalDateRange(event)
+                                            setQueryString('dateRange', event)
                                             fetchData(1, event)
                                         }}
                                         defaultValue={dateRange}
@@ -191,11 +244,40 @@ const Transaction = () => {
                         </div>
                     </div>
                     <div className="my-8">
-                        <Link href="/transaction/create">
-                            <a className="m-4 p-2 bg-blue-500 rounded text-white">
-                                Create
-                            </a>
-                        </Link>
+                        <div className="flex mb-4">
+                            <div className="w-1/2">
+                                <div className="inline-flex">
+                                    <Link href="/transaction/create">
+                                        <a className="ml-4 p-2 bg-blue-500 rounded text-white">
+                                            Create
+                                        </a>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="w-1/2">
+                                <select
+                                    name="category"
+                                    className="mt-1 block w-full"
+                                    // onClick={event => getCategories(event)}
+                                    onChange={event => {
+                                        setCategory(event.target.value)
+                                        setQueryString(
+                                            'category',
+                                            event.target.value,
+                                        )
+                                    }}
+                                    value={category}
+                                    required>
+                                    <option value={``}>Select category</option>
+
+                                    {categories?.map(item => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.title}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="py-6">
