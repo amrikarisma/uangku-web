@@ -116,10 +116,10 @@ const CreateTransaction = () => {
     }
     const getLastTrans = () => {
         let data = JSON.parse(localStorage.getItem('last_transaction'))
-        setType(data.type)
-        setCategory(data.category)
-        setWallet(data.wallet)
-        setDate(data.date)
+        setType(data?.type)
+        setCategory(data?.category)
+        setWallet(data?.wallet)
+        setDate(data?.date)
     }
 
     return (
