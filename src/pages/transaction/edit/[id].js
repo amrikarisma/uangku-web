@@ -153,7 +153,7 @@ const EditTransaction = ({ id }) => {
                                         }
                                         value={wallet}
                                         required>
-                                        <option value={``} disabled>
+                                        <option value={``}>
                                             Select Wallet
                                         </option>
 
@@ -176,9 +176,7 @@ const EditTransaction = ({ id }) => {
                                         }}
                                         value={type}
                                         required>
-                                        <option value={``} disabled>
-                                            Select Type
-                                        </option>
+                                        <option value={``}>Select Type</option>
 
                                         {types.map(item => (
                                             <option key={item}>{item}</option>
@@ -194,7 +192,7 @@ const EditTransaction = ({ id }) => {
                                         }
                                         value={category}
                                         required>
-                                        <option value={``} disabled>
+                                        <option value={``}>
                                             Select Category
                                         </option>
 
