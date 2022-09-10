@@ -83,15 +83,15 @@ const Wallets = () => {
                                 <tbody>
                                     {wallets?.data?.map(wallet => (
                                         <tr wallet="{wallet}" key={wallet.id}>
-                                            <td className="p-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                            <td className="p-4 md:pl-8 text-slate-500">
                                                 {wallet.name}
                                             </td>
-                                            <td className="p-4 md:pl-8 text-slate-500 dark:text-slate-400">
+                                            <td className="p-4 md:pl-8 text-slate-500">
                                                 {formatCurrency(
                                                     wallet.start_balance,
                                                 )}
                                             </td>
-                                            <td className="p-1 md:pl-8 text-slate-500 dark:text-slate-400">
+                                            <td className="p-1 md:pl-8 text-slate-500">
                                                 <Link
                                                     href={`/wallet/edit/${wallet.id}`}>
                                                     <a className="m-1 bg-slate-500 rounded text-white text-xs inline-flex items-center px-2 py-1 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">

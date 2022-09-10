@@ -176,6 +176,18 @@ const Transaction = () => {
             })
         }
     }
+    let mapDate
+    const checkSameDate = date => {
+        let value = true
+        if (
+            new Date(mapDate).toLocaleDateString('id-ID') ==
+            new Date(date).toLocaleDateString('id-ID')
+        ) {
+            value = false
+        }
+        mapDate = date
+        return value
+    }
 
     return (
         <AppLayout
@@ -289,21 +301,27 @@ const Transaction = () => {
                                                 className="px-2 py-6 md:px-6 bg-white border-b border-gray-200"
                                                 transaction="{transaction}"
                                                 key={transaction.id}>
-                                                <td className="p-2 md:p-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/5">
-                                                    <div className="md:inline text-center font-bold md:pr-4 text-2xl md:text-xl">
-                                                        {getViewDate(
-                                                            transaction.date,
-                                                            'day',
-                                                        )}
-                                                    </div>
-                                                    <div className="md:inline  text-center font-bold md:text-xl">
-                                                        {getViewDate(
-                                                            transaction.date,
-                                                            'month',
-                                                        )}
-                                                    </div>
+                                                <td className="p-2 md:p-4 md:pl-8 text-slate-500 md:w-1/5">
+                                                    {checkSameDate(
+                                                        transaction.date,
+                                                    ) && (
+                                                        <>
+                                                            <div className="md:inline text-center font-bold md:pr-4 text-2xl md:text-xl">
+                                                                {getViewDate(
+                                                                    transaction.date,
+                                                                    'day',
+                                                                )}
+                                                            </div>
+                                                            <div className="md:inline  text-center font-bold md:text-xl">
+                                                                {getViewDate(
+                                                                    transaction.date,
+                                                                    'month',
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    )}
                                                 </td>
-                                                <td className="py-2 md:p-4 pl-4 md:pl-8 text-slate-500 dark:text-slate-400 md:w-1/3">
+                                                <td className="py-2 md:p-4 pl-4 md:pl-8 text-slate-500 md:w-1/3">
                                                     <div className="font-bold">
                                                         {
                                                             transaction
