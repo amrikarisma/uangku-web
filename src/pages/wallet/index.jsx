@@ -136,29 +136,31 @@ const Wallets = () => {
                                 </tbody>
                             </table>
                             <div className="mt-10">
-                                <Pagination
-                                    activePage={
-                                        wallets?.current_page
-                                            ? wallets?.current_page
-                                            : 0
-                                    }
-                                    itemsCountPerPage={
-                                        wallets?.per_page
-                                            ? wallets?.per_page
-                                            : 0
-                                    }
-                                    totalItemsCount={
-                                        wallets?.total ? wallets?.total : 0
-                                    }
-                                    onChange={pageNumber => {
-                                        fetchData(pageNumber)
-                                    }}
-                                    pageRangeDisplayed={8}
-                                    itemClass="inline"
-                                    linkClass="inline px-3 py-2 mx-1 bg-slate-500 text-white hover:text-white visited:text-white rounded"
-                                    firstPageText="First Page"
-                                    lastPageText="Last Lage"
-                                />
+                                {wallets.last_page > 2 && (
+                                    <Pagination
+                                        activePage={
+                                            wallets?.current_page
+                                                ? wallets?.current_page
+                                                : 0
+                                        }
+                                        itemsCountPerPage={
+                                            wallets?.per_page
+                                                ? wallets?.per_page
+                                                : 0
+                                        }
+                                        totalItemsCount={
+                                            wallets?.total ? wallets?.total : 0
+                                        }
+                                        onChange={pageNumber => {
+                                            fetchData(pageNumber)
+                                        }}
+                                        pageRangeDisplayed={8}
+                                        itemClass="inline"
+                                        linkClass="inline px-3 py-2 mx-1 bg-slate-500 text-white hover:text-white visited:text-white rounded"
+                                        firstPageText="First Page"
+                                        lastPageText="Last Lage"
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>

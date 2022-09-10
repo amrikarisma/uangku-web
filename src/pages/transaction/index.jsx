@@ -373,33 +373,37 @@ const Transaction = () => {
                                 </tbody>
                             </table>
                             <div className="mt-10">
-                                <Pagination
-                                    activePage={
-                                        transactions?.transactions?.current_page
-                                            ? transactions?.transactions
-                                                  ?.current_page
-                                            : 0
-                                    }
-                                    itemsCountPerPage={
-                                        transactions?.transactions?.per_page
-                                            ? transactions?.transactions
-                                                  ?.per_page
-                                            : 0
-                                    }
-                                    totalItemsCount={
-                                        transactions?.transactions?.total
-                                            ? transactions?.transactions?.total
-                                            : 0
-                                    }
-                                    onChange={pageNumber => {
-                                        fetchData(pageNumber)
-                                    }}
-                                    pageRangeDisplayed={8}
-                                    itemClass="inline"
-                                    linkClass="inline px-3 py-2 mx-1 bg-slate-500 text-white hover:text-white visited:text-white rounded"
-                                    firstPageText="First Page"
-                                    lastPageText="Last Lage"
-                                />
+                                {transactions?.transactions?.last_page > 1 && (
+                                    <Pagination
+                                        activePage={
+                                            transactions?.transactions
+                                                ?.current_page
+                                                ? transactions?.transactions
+                                                      ?.current_page
+                                                : 0
+                                        }
+                                        itemsCountPerPage={
+                                            transactions?.transactions?.per_page
+                                                ? transactions?.transactions
+                                                      ?.per_page
+                                                : 0
+                                        }
+                                        totalItemsCount={
+                                            transactions?.transactions?.total
+                                                ? transactions?.transactions
+                                                      ?.total
+                                                : 0
+                                        }
+                                        onChange={pageNumber => {
+                                            fetchData(pageNumber)
+                                        }}
+                                        pageRangeDisplayed={8}
+                                        itemClass="inline"
+                                        linkClass="inline px-3 py-2 mx-1 bg-slate-500 text-white hover:text-white visited:text-white rounded"
+                                        firstPageText="First Page"
+                                        lastPageText="Last Lage"
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
