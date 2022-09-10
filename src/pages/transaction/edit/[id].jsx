@@ -51,7 +51,6 @@ const EditTransaction = ({ id }) => {
             .then(res => {
                 // eslint-disable-next-line no-console
                 setDeptList(res.data.data)
-                setDept(res.data.data?.t_detail?.tr_id)
             })
             .catch(error => {
                 setErrors(error)
@@ -83,6 +82,7 @@ const EditTransaction = ({ id }) => {
                 setCategory(res.data.data.category_id)
                 setDate(new Date(`${res.data.data.date}`))
                 getDeptList(res.data.data.category_id)
+                setDept(res.data.data?.t_detail?.tr_id)
             })
             .catch(error => {
                 if (error.response.status !== 409) throw error
