@@ -16,31 +16,12 @@ const Setting = () => {
         payback_receivable_category,
         setPaybackReceivableCategory,
     ] = useState('')
-    const [setting, setSetting] = useState([])
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
     useEffect(() => {
         getCategory()
         getSetting()
-        setSetting([
-            {
-                key: 'dept_category',
-                value: dept_category,
-            },
-            {
-                key: 'payback_dept_category',
-                value: payback_dept_category,
-            },
-            {
-                key: 'receivable_category',
-                value: receivable_category,
-            },
-            {
-                key: 'payback_receivable_category',
-                value: payback_receivable_category,
-            },
-        ])
     }, [])
 
     const getCategory = async () => {
@@ -82,6 +63,24 @@ const Setting = () => {
 
     const submitForm = async event => {
         event.preventDefault()
+        let settings = [
+            {
+                key: 'dept_category',
+                value: dept_category,
+            },
+            {
+                key: 'payback_dept_category',
+                value: payback_dept_category,
+            },
+            {
+                key: 'receivable_category',
+                value: receivable_category,
+            },
+            {
+                key: 'payback_receivable_category',
+                value: payback_receivable_category,
+            },
+        ]
 
         const fetchData = async settings => {
             await axios
@@ -101,7 +100,7 @@ const Setting = () => {
                 })
         }
 
-        fetchData(setting)
+        fetchData(settings)
     }
     return (
         <AppLayout
