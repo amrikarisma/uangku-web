@@ -363,6 +363,13 @@ const Transaction = () => {
                                             </tr>
                                         ),
                                     )}
+                                    {transactions?.transactions?.total == 0 && (
+                                        <tr>
+                                            <td className="text-center">
+                                                <h3>Transaksi Kosong</h3>
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                             <div className="mt-10">
