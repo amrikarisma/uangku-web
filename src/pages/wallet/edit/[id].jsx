@@ -70,7 +70,7 @@ const EditWallet = ({ id }) => {
             .replaceAll(' ', '')
             .replaceAll('.', '')
 
-        setStartBalance(tempValue)
+        setStartBalance(parseInt(tempValue))
         formatCurrency(tempValue)
     }
 
