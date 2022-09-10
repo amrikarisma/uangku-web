@@ -171,7 +171,11 @@ const CreateTransaction = () => {
                                             <option
                                                 key={item.id}
                                                 value={`${item.id}`}>
-                                                {item.name}
+                                                {`${
+                                                    item.name
+                                                } (${formatCurrency(
+                                                    item.start_balance,
+                                                )})`}
                                             </option>
                                         ))}
                                     </select>
