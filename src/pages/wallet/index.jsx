@@ -136,7 +136,7 @@ const Wallets = () => {
                                 </tbody>
                             </table>
                             <div className="mt-10">
-                                {wallets.last_page > 2 && (
+                                {wallets.last_page > 1 && (
                                     <Pagination
                                         activePage={
                                             wallets?.current_page
