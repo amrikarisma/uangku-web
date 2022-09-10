@@ -23,6 +23,24 @@ const Setting = () => {
     useEffect(() => {
         getCategory()
         getSetting()
+        setSetting([
+            {
+                key: 'dept_category',
+                value: dept_category,
+            },
+            {
+                key: 'payback_dept_category',
+                value: payback_dept_category,
+            },
+            {
+                key: 'receivable_category',
+                value: receivable_category,
+            },
+            {
+                key: 'payback_receivable_category',
+                value: payback_receivable_category,
+            },
+        ])
     }, [])
 
     const getCategory = async () => {
@@ -64,24 +82,7 @@ const Setting = () => {
 
     const submitForm = async event => {
         event.preventDefault()
-        setSetting([
-            {
-                key: 'dept_category',
-                value: dept_category,
-            },
-            {
-                key: 'payback_dept_category',
-                value: payback_dept_category,
-            },
-            {
-                key: 'receivable_category',
-                value: receivable_category,
-            },
-            {
-                key: 'payback_receivable_category',
-                value: payback_receivable_category,
-            },
-        ])
+
         const fetchData = async settings => {
             await axios
                 .post('/api/setting/transaction/store', {
